@@ -8,8 +8,7 @@ async function onPlay() {
 	const options = getFaceDetectorOptions();
 	const result = await faceapi
 		.detectAllFaces(videoEl, options)
-		.withFaceLandmarks()
-		.withFaceDescriptors();
+		.withFaceLandmarks();
 
 	if (result) {
 		const canvas = document.querySelector('#overlay');
@@ -26,10 +25,9 @@ async function onPlay() {
 async function run() {
 	// load face detection models
 	await faceapi.nets.tinyFaceDetector.load('./models');
-	await faceapi.loadFaceRecognitionModel('./models/');
 	await faceapi.loadFaceLandmarkModel('./models');
 
-	// access user's webcam
+	// access device's camera
 	const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
 	const videoEl = document.querySelector('#inputVideo');
 	videoEl.srcObject = stream;
