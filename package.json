@@ -1,9 +1,10 @@
 {
 	"scripts": {
-		"start": "npx lite-server"
+		"start": "lite-server"
 	},
 	"devDependencies": {
 		"eslint": "^6.5.1",
+		"lite-server": "^2.5.4",
 		"prettier": "^1.18.2"
 	}
 }

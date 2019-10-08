@@ -2,5 +2,5 @@
 
 ```sh
 $ npm install
-$ npx lite-server
+$ npm start
 ```
