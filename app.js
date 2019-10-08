@@ -7,8 +7,9 @@ async function onPlay() {
 
 	const options = getFaceDetectorOptions();
 	const result = await faceapi
-		.detectSingleFace(videoEl, options)
-		.withFaceLandmarks();
+		.detectAllFaces(videoEl, options)
+		.withFaceLandmarks()
+		.withFaceDescriptors();
 
 	if (result) {
 		const canvas = document.querySelector('#overlay');
@@ -17,6 +18,9 @@ async function onPlay() {
 
 		faceapi.draw.drawDetections(canvas, resizedResults);
 		faceapi.draw.drawFaceLandmarks(canvas, resizedResults);
+
+		// face-descriptor object
+		// result.forEach(fd => console.log(fd));
 	}
 
 	setTimeout(() => onPlay());
@@ -27,6 +31,7 @@ async function run() {
 	// await faceapi.loadMtcnnModel('./models');
 	// await faceapi.loadFaceLandmarkModel('./models');
 	await faceapi.nets.tinyFaceDetector.load('./models');
+	await faceapi.loadFaceRecognitionModel('./models/');
 	await faceapi.loadFaceLandmarkModel('./models');
 
 	// access user's webcam
