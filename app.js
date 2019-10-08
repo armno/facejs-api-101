@@ -7,7 +7,7 @@ async function onPlay() {
 
 	const options = getFaceDetectorOptions();
 	const result = await faceapi
-		.detectAllFaces(videoEl, options)
+		.detectSingleFace(videoEl, options)
 		.withFaceLandmarks();
 
 	if (result) {
@@ -15,8 +15,21 @@ async function onPlay() {
 		const dims = faceapi.matchDimensions(canvas, videoEl, true);
 		const resizedResults = faceapi.resizeResults(result, dims);
 
-		faceapi.draw.drawDetections(canvas, resizedResults);
-		faceapi.draw.drawFaceLandmarks(canvas, resizedResults);
+		// faceapi.draw.drawDetections(canvas, resizedResults);
+
+		// draw customized landmarks
+		const landmarkDrawBox = new faceapi.draw.DrawFaceLandmarks(
+			resizedResults.landmarks,
+			{
+				drawLines: true,
+				drawPoints: true,
+				pointSize: 2,
+				lineWidth: 2,
+				pointColor: 'rgba(255, 255, 255, 0.7)',
+				lineColor: 'rgba(255, 255, 255, 0.7)'
+			}
+		);
+		landmarkDrawBox.draw(canvas);
 	}
 
 	requestAnimationFrame(() => onPlay());
