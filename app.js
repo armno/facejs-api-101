@@ -6,12 +6,17 @@ async function onPlay() {
 	}
 
 	const options = getFaceDetectorOptions();
-	const result = await faceapi.detectSingleFace(videoEl, options);
+	const result = await faceapi
+		.detectSingleFace(videoEl, options)
+		.withFaceLandmarks();
 
 	if (result) {
 		const canvas = document.querySelector('#overlay');
 		const dims = faceapi.matchDimensions(canvas, videoEl, true);
-		faceapi.draw.drawDetections(canvas, faceapi.resizeResults(result, dims));
+		const resizedResults = faceapi.resizeResults(result, dims);
+
+		faceapi.draw.drawDetections(canvas, resizedResults);
+		faceapi.draw.drawFaceLandmarks(canvas, resizedResults);
 	}
 
 	setTimeout(() => onPlay());
@@ -20,7 +25,7 @@ async function onPlay() {
 async function run() {
 	// load face detection models
 	await faceapi.loadMtcnnModel('./models');
-	await faceapi.loadFaceRecognitionModel('./models');
+	await faceapi.loadFaceLandmarkModel('./models');
 
 	// access user's webcam
 	const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
@@ -34,7 +39,7 @@ function isFaceDetectionModelLoaded() {
 }
 
 function getFaceDetectorOptions() {
-	return new faceapi.MtcnnOptions({ minFaceSize: 200 });
+	return new faceapi.MtcnnOptions({ minFaceSize: 50 });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
