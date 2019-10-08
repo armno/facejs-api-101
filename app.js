@@ -2,7 +2,7 @@
 async function onPlay() {
 	const videoEl = document.querySelector('#inputVideo');
 	if (videoEl.paused || videoEl.ended || !isFaceDetectionModelLoaded()) {
-		return setTimeout(() => onPlay());
+		return requestAnimationFrame(() => onPlay());
 	}
 
 	const options = getFaceDetectorOptions();
@@ -18,18 +18,13 @@ async function onPlay() {
 
 		faceapi.draw.drawDetections(canvas, resizedResults);
 		faceapi.draw.drawFaceLandmarks(canvas, resizedResults);
-
-		// face-descriptor object
-		// result.forEach(fd => console.log(fd));
 	}
 
-	setTimeout(() => onPlay());
+	requestAnimationFrame(() => onPlay());
 }
 
 async function run() {
 	// load face detection models
-	// await faceapi.loadMtcnnModel('./models');
-	// await faceapi.loadFaceLandmarkModel('./models');
 	await faceapi.nets.tinyFaceDetector.load('./models');
 	await faceapi.loadFaceRecognitionModel('./models/');
 	await faceapi.loadFaceLandmarkModel('./models');
