@@ -15,7 +15,7 @@ async function onPlay() {
 		const dims = faceapi.matchDimensions(canvas, videoEl, true);
 		const resizedResults = faceapi.resizeResults(result, dims);
 
-		// faceapi.draw.drawDetections(canvas, resizedResults);
+		faceapi.draw.drawDetections(canvas, resizedResults);
 		faceapi.draw.drawFaceLandmarks(canvas, resizedResults);
 	}
 
@@ -24,7 +24,9 @@ async function onPlay() {
 
 async function run() {
 	// load face detection models
-	await faceapi.loadMtcnnModel('./models');
+	// await faceapi.loadMtcnnModel('./models');
+	// await faceapi.loadFaceLandmarkModel('./models');
+	await faceapi.nets.tinyFaceDetector.load('./models');
 	await faceapi.loadFaceLandmarkModel('./models');
 
 	// access user's webcam
@@ -35,11 +37,14 @@ async function run() {
 
 // helpers
 function isFaceDetectionModelLoaded() {
-	return !!faceapi.nets.mtcnn.params;
+	return !!faceapi.nets.tinyFaceDetector.params;
 }
 
 function getFaceDetectorOptions() {
-	return new faceapi.MtcnnOptions({ minFaceSize: 50 });
+	return new faceapi.TinyFaceDetectorOptions({
+		inputSize: 512, // must be divisable by 32
+		scoreThreshold: 0.5
+	});
 }
 
 document.addEventListener('DOMContentLoaded', () => {
