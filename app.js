@@ -30,7 +30,10 @@ async function onPlay() {
 			}
 		);
 		landmarkDrawBox.draw(canvas);
+		displayBoxInfo(resizedResults.detection.box);
 	}
+
+	displayVideoInfo(videoEl);
 
 	requestAnimationFrame(() => onPlay());
 }
@@ -56,6 +59,26 @@ function getFaceDetectorOptions() {
 		inputSize: 512, // must be divisable by 32
 		scoreThreshold: 0.5
 	});
+}
+
+function displayVideoInfo(video) {
+	const detected = !!document.querySelector('#videoWidth').innerText;
+	if (detected) {
+		return;
+	}
+
+	const width = video.offsetWidth;
+	const height = video.offsetHeight;
+	document.querySelector('#videoWidth').innerText = `${width}px`;
+	document.querySelector('#videoHeight').innerText = `${height}px`;
+}
+
+function displayBoxInfo(box) {
+	const { x, y, width, height } = box;
+	document.querySelector('#boxWidth').innerText = `${width.toFixed(2)}px`;
+	document.querySelector('#boxHeight').innerText = `${height.toFixed(2)}px`;
+	document.querySelector('#boxY').innerText = `${y.toFixed(2)}px`;
+	document.querySelector('#boxX').innerText = `${x.toFixed(2)}px`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
