@@ -112,6 +112,9 @@ function displayPupilPosition(landmarks) {
 	const leftEyePoints = landmarks.getLeftEye();
 	const leftEyeAvg = avgPoints(leftEyePoints);
 
+	const nosePoints = landmarks.getNose();
+	const noseAvg = avgPoints(nosePoints);
+
 	document.querySelector(
 		'#rightPupilPosition'
 	).innerText = `${rightEyeAvg.x.toFixed(2)}, ${rightEyeAvg.y.toFixed(2)}`;
@@ -119,6 +122,11 @@ function displayPupilPosition(landmarks) {
 	document.querySelector(
 		'#leftPupilPosition'
 	).innerText = `${leftEyeAvg.x.toFixed(2)}, ${leftEyeAvg.y.toFixed(2)}`;
+
+	// nose
+	document.querySelector('#nosePosition').innerText = `${noseAvg.x.toFixed(
+		2
+	)}, ${noseAvg.y.toFixed(2)}`;
 }
 
 function avgPoints(points) {
