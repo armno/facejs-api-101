@@ -31,7 +31,7 @@ async function onPlay() {
 		);
 		landmarkDrawBox.draw(canvas);
 		displayBoxInfo(resizedResults.detection.box);
-		displayPupilPosition(resizedResults.landmarks.positions);
+		displayPupilPosition(resizedResults.landmarks);
 	}
 
 	displayVideoInfo(videoEl);
@@ -104,24 +104,33 @@ function listMediaDevices() {
 }
 
 // https://github.com/justadudewhohacks/face-api.js/issues/437
-function displayPupilPosition(positions) {
-	const rightEyeX =
-		(positions[37].x + positions[38].x + positions[39].x + positions[40].x) / 4;
-	const rightEyeY =
-		(positions[37].y + positions[38].y + positions[39].y + positions[40].y) / 4;
+// https://justadudewhohacks.github.io/face-api.js/docs/classes/facelandmarks68.html
+function displayPupilPosition(landmarks) {
+	const rightEyePoints = landmarks.getRightEye();
+	const rightEyeAvg = avgPoints(rightEyePoints);
 
-	const leftEyeX =
-		(positions[43].x + positions[44].x + positions[45].x + positions[46].x) / 4;
-	const leftEyeY =
-		(positions[43].y + positions[44].y + positions[45].y + positions[46].y) / 4;
+	const leftEyePoints = landmarks.getLeftEye();
+	const leftEyeAvg = avgPoints(leftEyePoints);
 
 	document.querySelector(
 		'#rightPupilPosition'
-	).innerText = `${rightEyeX.toFixed(2)}px, ${rightEyeY.toFixed(2)}px`;
+	).innerText = `${rightEyeAvg.x.toFixed(2)}, ${rightEyeAvg.y.toFixed(2)}`;
 
-	document.querySelector('#leftPupilPosition').innerText = `${leftEyeX.toFixed(
-		2
-	)}px, ${leftEyeY.toFixed(2)}px`;
+	document.querySelector(
+		'#leftPupilPosition'
+	).innerText = `${leftEyeAvg.x.toFixed(2)}, ${leftEyeAvg.y.toFixed(2)}`;
+}
+
+function avgPoints(points) {
+	return points.reduce(
+		(prev, curr) => {
+			return {
+				x: (prev.x + curr.x) / 2,
+				y: (prev.y + curr.y) / 2
+			};
+		},
+		{ x: 0, y: 0 }
+	);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
