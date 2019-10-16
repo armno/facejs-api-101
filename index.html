@@ -35,12 +35,30 @@
 			margin-right: 40px;
 		}
 
-		.info-value h4 {
+		.info-value h4,
+		.media-device-id {
 			font-weight: 300;
 			text-transform: uppercase;
 			color: #565656;
 			margin-bottom: 0.5em;
 			font-size: 0.9rem;
+		}
+
+		.media-devices {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			max-width: 200px;
+			margin-bottom: 60px;
+		}
+
+		.media-device-id {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		h2 {
+			font-size: 1rem;
 		}
 
 	</style>
@@ -53,7 +71,11 @@
 		<canvas id="overlay"></canvas>
 	</div>
 	<div class="info">
-		<h2>Info</h2>
+		<h2>Media Devices</h2>
+
+		<ul id="mediaDevices" class="media-devices"></ul>
+
+		<h2>Video Info</h2>
 
 		<div class="info-value">
 			<h4>video width</h4>
@@ -68,26 +90,36 @@
 	<div class="info">
 		<h2>Detection</h2>
 		<div class="info-value">
-			<h4>width</h4>
+			<h4>face.width</h4>
 			<div id="boxWidth"></div>
 		</div>
 
 		<div class="info-value">
-			<h4>height</h4>
+			<h4>face.height</h4>
 			<div id="boxHeight"></div>
 		</div>
 
 		<div class="info-value">
-			<h4>x</h4>
+			<h4>face.x</h4>
 			<div id="boxX"></div>
 		</div>
 
 		<div class="info-value">
-			<h4>y</h4>
+			<h4>face.y</h4>
 			<div id="boxY"></div>
 		</div>
 
+		<div class="info-value">
+			<h4>Right Pupil (Estimated)</h4>
+			<div id="rightPupilPosition"></div>
+		</div>
+
+		<div class="info-value">
+			<h4>Left Pupil (Estimated)</h4>
+			<div id="leftPupilPosition"></div>
+		</div>
 	</div>
+
 	<script src="app.js"></script>
 </body>
 
