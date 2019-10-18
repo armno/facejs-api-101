@@ -50,6 +50,7 @@ async function run() {
 	videoEl.srcObject = stream;
 
 	listMediaDevices();
+	displayUserAgent();
 }
 
 // helpers
@@ -139,6 +140,11 @@ function avgPoints(points) {
 		},
 		{ x: 0, y: 0 }
 	);
+}
+
+function displayUserAgent() {
+	const ua = navigator.userAgent;
+	document.querySelector('#userAgentString').innerText = ua;
 }
 
 document.addEventListener('DOMContentLoaded', () => {

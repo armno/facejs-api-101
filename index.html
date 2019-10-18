@@ -33,6 +33,7 @@
 
 		.info {
 			margin-right: 40px;
+			max-width: 220px;
 		}
 
 		.info-value h4,
@@ -49,7 +50,6 @@
 			margin: 0;
 			padding: 0;
 			max-width: 200px;
-			margin-bottom: 60px;
 		}
 
 		.media-device-id {
@@ -66,6 +66,10 @@
 			font-size: 0.7rem;
 		}
 
+		.title-video-info {
+			margin-top: 60px;
+		}
+
 	</style>
 	<script src="https://cdn.jsdelivr.net/npm/face-api.js@0.21.0/dist/face-api.js"></script>
 </head>
@@ -76,11 +80,16 @@
 		<canvas id="overlay"></canvas>
 	</div>
 	<div class="info">
-		<h2>Media Devices</h2>
+		<h2>Device Info</h2>
 
 		<ul id="mediaDevices" class="media-devices"></ul>
 
-		<h2>Video Info</h2>
+		<div class="info-value">
+			<h4>UserAgent</h4>
+			<div id="userAgentString"></div>
+		</div>
+
+		<h2 class="title-video-info">Video Info</h2>
 
 		<div class="info-value">
 			<h4>video width</h4>
@@ -130,7 +139,7 @@
 		</div>
 
 		<p>
-			<small>*Left and right eyes are swapped for front webcam.</small>
+			<small>*Left and right eyes are swapped for the front webcam.</small>
 		</p>
 	</div>
 
