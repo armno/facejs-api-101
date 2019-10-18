@@ -147,6 +147,15 @@ function displayUserAgent() {
 	document.querySelector('#userAgentString').innerText = ua;
 }
 
+function displayOrientation(event) {
+	const { alpha, beta, gamma } = event;
+	document.querySelector('#alpha').innerText = alpha.toFixed(2);
+	document.querySelector('#beta').innerText = beta.toFixed(2);
+	document.querySelector('#gamma').innerText = gamma.toFixed(2);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	run();
+
+	window.addEventListener('deviceorientation', displayOrientation);
 });
